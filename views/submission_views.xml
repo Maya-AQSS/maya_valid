@@ -1,0 +1,96 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="maya_valid.submission_list">
+      <field name="name">Entregas de convalidaciones en Moodle</field>
+      <field name="model">maya_valid.submission</field>
+      <field name="arch" type="xml">
+        <list create="0" limit="40" decoration-info="state == 'pending'" decoration-danger="state == 'error'">
+          <field name="study_id" options="{'no_open': True}"/>
+          <field name="kind"/>
+          <field name="moodle_user_info"/>
+          <field name="student_id" decoration-danger="not student_id"/>
+          <field name="attempt_number"/>
+          <field name="file_count"/>
+          <field name="time_modified"/>
+          <field name="state"/>
+        </list>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="maya_valid.submission_form">
+      <field name="name">Entrega de convalidaciones en Moodle</field>
+      <field name="model">maya_valid.submission</field>
+      <field name="arch" type="xml">
+        <form create="0">
+          <header>
+            <field name="state" widget="statusbar"/>
+          </header>
+          <sheet>
+            <group col="2">
+              <group string="Alumno">
+                <field name="moodle_user_id"/>
+                <field name="moodle_username"/>
+                <field name="moodle_lastname"/>
+                <field name="moodle_firstname"/>
+                <field name="student_id"/>
+              </group>
+              <group string="Entrega">
+                <field name="task_id"/>
+                <field name="study_id" options="{'no_open': True}"/>
+                <field name="school_year_id" options="{'no_open': True}"/>
+                <field name="kind"/>
+                <field name="moodle_submission_id"/>
+                <field name="attempt_number"/>
+                <field name="moodle_status"/>
+                <field name="grading_status"/>
+                <field name="time_modified"/>
+                <field name="last_sync"/>
+              </group>
+            </group>
+            <group string="Ficheros">
+              <field name="file_count"/>
+              <field name="files" readonly="1"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="maya_valid.submission_search">
+      <field name="name">Búsqueda de entregas de convalidaciones</field>
+      <field name="model">maya_valid.submission</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="moodle_username" string="Usuario Moodle"/>
+          <field name="moodle_lastname" string="Apellidos"/>
+          <field name="student_id"/>
+          <filter name="filter_pending" string="Pendientes" domain="[('state', '=', 'pending')]"/>
+          <filter name="filter_unmatched" string="Sin estudiante" domain="[('student_id', '=', False)]"/>
+          <separator/>
+          <filter name="filter_studies" string="Por estudios" domain="[('validation_type', '=', 0)]"/>
+          <filter name="filter_competency" string="Por competencias" domain="[('validation_type', '=', 1)]"/>
+          <group>
+            <filter name="group_by_study" string="Estudio" context="{'group_by': 'study_id'}"/>
+            <filter name="group_by_kind" string="Entrega" context="{'group_by': 'kind'}"/>
+            <filter name="group_by_state" string="Estado" context="{'group_by': 'state'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maya_valid.action_submissions">
+      <field name="name">Entregas en Moodle</field>
+      <field name="res_model">maya_valid.submission</field>
+      <field name="view_mode">list,form</field>
+      <field name="context">{'search_default_group_by_study': 1}</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">Todavía no se han sincronizado entregas desde Moodle</p>
+      </field>
+    </record>
+
+    <menuitem name="Entregas en Moodle" id="maya_valid.menu_submissions" parent="maya_valid.menu_configuration"
+              action="maya_valid.action_submissions" groups="maya_core.group_ROOT,maya_core.group_MNGT"/>
+
+  </data>
+</odoo>

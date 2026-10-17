@@ -38,6 +38,7 @@
         'security/validation_access.xml',   # politicas de acceso a convalidaciones
         # vistas
         'views/views.xml',
+        'views/submission_views.xml',
         'views/banners.xml',
         'views/config_settings_view.xml',
         # datos de modelos

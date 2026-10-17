@@ -5,5 +5,10 @@
       <field name="privilege_id" ref="maya_core.privilege_maya"/>
       <field name="implied_ids" eval="[(4,ref('maya_core.group_TEACH'))]"/>
     </record>
+
+    <!-- aplicaciones externas (n8n) que pueden lanzar la sincronización de convalidaciones vía API -->
+    <record id="maya_valid.group_valid_integration" model="res.groups">
+      <field name="name">Integración convalidaciones</field>
+    </record>
   </data>
 </odoo>
