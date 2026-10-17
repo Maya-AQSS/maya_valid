@@ -1,0 +1,287 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="maya_valid.validation_tree">
+      <field name="name">Lista de convalidaciones/aprobados con anterioridad solicitados</field>
+      <field name="model">maya_valid.validation</field>
+      <field name="arch" type="xml">
+        <list limit="20">
+          <field name="study_abbr"/>
+          <field name="student_info"/>
+          <field name="student_surname" invisible="1"/>
+          <field name="validation_subjects_info"/>
+          <field name="state"/>
+          <field name="situation" decoration-warning="situation == '3'" decoration-danger="situation == '4'"/>
+          <field name="correction_date"/>
+          <field name="correction_date_end" widget="remaining_days"/>
+          <field name="correction_reason"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- filtros para las validation -->
+    <record model="ir.ui.view" id="maya_valid.validation_search">
+      <field name="name">Búsqueda para convalidaciones</field>
+      <field name="model">maya_valid.validation</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="student_surname" string="Apellidos"/>
+          <field name="student_nia" string="NIA"/>
+          <field name="student_name" string="Nombre"/>
+          <filter name="filter_in_process" string="Por procesar" domain="['|', ('state', '=', '0'), ('state', '=', '1')]"/>
+          <filter name="filter_resolved" string="Resueltas" domain="[('state', '=', '5')]"/>
+          <filter name="filter_reviewed" string="Revisadas" domain="[('state', '=', '8')]"/>
+          <group>
+            <filter name="group_by_study" string="Ciclo" context="{'group_by': 'study_id'}"/>
+            <filter name="group_by_state" string="Estado" context="{'group_by': 'state'}"/>
+          </group>
+        </search>    
+      </field>
+    </record>
+
+    <!-- filtros para los expedientes académicos -->
+    <record model="ir.ui.view" id="maya_valid.academic_record_search">
+      <field name="name">Búsqueda para expedientes académicos</field>
+      <field name="model">maya_valid.academic_record</field>
+      <field name="arch" type="xml">
+        <search>
+          <group>
+            <filter name="group_by_state" string="Estado" context="{'group_by': 'state'}"/>
+          </group>
+        </search>    
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="maya_valid.validation_form">
+      <field name="name">validation.form.view</field>
+      <field name="model">maya_valid.validation</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="validation_to_finished" icon="fa-flag-checkered" 
+              string=" Finalizar" class="oe_edit_only oe_highlight"
+              invisible="state != '2' or validation_subjects_info != '0 / 0 / 0 / 0'"
+              type="object"
+              confirm="ATENCIÓN: Esta acción está pensanda para forzar el cierre de convalidaciones en estado de subsanación de formato que han sido abandonadas por el alumno. ¿Deseas continuar?"/>
+          </header>
+          <group col='2'>
+            <group>
+              <field name="student_surname"/>
+              <field name="student_nia"/>
+              <!-- lo incluyo (aunque oculto) para poder utilizar el campo en la condición del botón de finalizar -->
+              <field name="validation_subjects_info" invisible="1"/>
+              <field name="claimed" invisible="1"/>
+              <field name="state" invisible="1"/>
+            </group>
+            <group>
+              <field name="student_name"/>
+              <!-- no quiero que aparezca un enlace --> 
+              <field name="study_id" options="{'no_open': True}" readonly="1" />
+            </group>
+          </group>
+          <group col='4'>            
+              <group>
+                <button name="download_validation_action" icon="fa-download" 
+                  string=" Documentación" class="oe_highlight"
+                  type="object"/>
+                <button name="download_validation_claim_action" icon="fa-download" 
+                  string=" Reclamación" class="oe_highlight"
+                  type="object" invisible="claimed != True"/>
+              </group> 
+             <group> 
+              <field name="sign_info" decoration-success="sign_state == True" decoration-danger="sign_state == False"/>
+              <field name="sign_state" invisible="1"/>
+              <field name="validation_type" invisible="1"/>
+            </group> 
+            <group>
+              <field name="documentation_filename" />
+              <field name="attempt_number"/>
+            </group>      
+            <group>
+              <field name="state"/>
+              <field name="situation" decoration-warning="situation == '3'"/>
+            </group>
+          </group>
+          <group>
+            <field name="info" class="info"
+              invisible="info == ''" />
+          </group>
+          <notebook>
+            <page string='Módulos'>
+              <!-- tiene que aparecer en la vista para que pueda trabajar con él en las dos
+                  visualizaciones parciales que se hacen a partir de ella.
+                  Para que no aparezca ponemos su display a none (hacerlo con attr 
+                  implica que no se envia al cliente)   -->
+              <field name="validation_subjects_ids" style="display: none"/>
+              <field name="is_state_read_only" style="display: none"/>
+              <group> <!-- se incluyen dentro de un grupo para que aparezca el texto-->
+                <field name="validation_subjects_not_for_correction_ids">
+                  <list editable="top">
+                    <field name="subject_id" options="{'no_open': True}" readonly="1"/>
+                    <field name="is_read_only" string="Bloqueada" 
+                     column_invisible="not (parent.situation=='5') and not (parent.state == '2' and parent.situation == '2')"/>
+                    <field name="validation_type" readonly="is_read_only == True or parent.validation_type == 1"/>
+                    <field name="accepted" readonly="is_read_only == True"/>
+                    <field name="mark" readonly="is_read_only == True or parent.validation_type == 1"/>
+                    <field name="state" readonly="is_read_only == True"/>
+                    <field name="state_read_only" readonly="True" column_invisible="parent.is_state_read_only == False"/>
+                    <field name="validation_reason" readonly="is_read_only == True or parent.validation_type == 1" />
+                    <field name="comments" readonly="is_read_only == True"/>
+                  </list>
+                </field>
+                <field name="validation_subjects_for_correction_ids"> 
+                  <!-- Quiero que los campos a mostrar sean diferentes a los de la vista list del modelo validation_subject
+                      así que redefindo de manera local la vista -->
+                  <list editable="top"> 
+                    <field name="subject_id" options="{'no_open': True}" readonly="1"/>
+                    <field name="is_read_only" string="Bloqueada" 
+                      column_invisible="not (parent.situation=='5') and not (parent.state == '2' and parent.situation == '2')"/>
+                    <field name="validation_type" readonly="is_read_only == True"/>
+                    <field name="state" readonly="is_read_only == True"/>
+                    <field name="correction_reason" readonly="is_read_only == True"/>
+                  </list>
+                </field>
+              </group>
+            </page>
+            <page string='Observ. subsanación' >
+              <group>
+                <field name="remarks" readonly="state not in ['0','1','2','3','4']"/>
+              </group>
+            </page>
+            <page string='Observ. reclamación' invisible="claimed != True">
+              <group>
+                <field name="claimed" invisible="1"/>
+                <field name="remarks_claim"/>
+              </group>
+            </page>
+          </notebook>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="maya_valid.validation_subject_tree">
+      <field name="name">Lista de convalidaciones/aprobados con anterioridad solicitados</field>
+      <field name="model">maya_valid.validation_subject</field>
+      <field name="arch" type="xml">
+        <list editable="top" limit="20">
+          <field name="subject_id" options="{'no_open': True}" readonly="1"/>
+          <field name="validation_type" />
+          <field name="is_read_only" invisible="0"/>
+          <field name="accepted"/>
+          <field name="mark"/>
+          <field name="state"/>
+          <field name="validation_reason"/>
+          <field name="correction_reason"/>
+          <field name="comments"/>
+        </list>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="maya_valid.school_year_form_inherit">
+      <field name="name">school_year.form.view</field>
+      <field name="model">maya_core.school_year</field>
+      <field name="inherit_id" ref="maya_core.school_year_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="/form/notebook/page[3]" position="after">
+            <page string = "Convalidaciones">
+              <group col="2">
+                <group>
+                  <separator string="Por estudios" style="padding-bottom:15px"/>
+                  <field name="date_init_valid"/>
+                  <field name="date_end_valid"/>
+                </group>
+                <group>
+                  <separator string="Por acreditación de competencias" style="padding-bottom:15px"/>
+                  <field name="date_init_valid_competency"/>
+                  <field name="date_end_valid_competency"/>
+                </group>
+              </group>
+            </page>
+          </xpath>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="maya_valid.academic_record_tree">
+      <field name="name">Lista de convalidaciones/aprobados con anterioridad solicitados</field>
+      <field name="model">maya_valid.academic_record</field>
+      <field name="arch" type="xml">
+        <list editable="top" limit="20">
+          <field name="validation_id" readonly="1"/>
+          <field name="info" readonly="1"/>
+          <field name="state"/>
+          <field name="comments"/>
+        </list>
+      </field>
+    </record>
+
+   <!-- actions opening views on models -->
+   <record model="ir.actions.act_window" id="maya_valid.action_studies_validation">
+      <field name="name">Convalidaciones</field>
+      <field name="res_model">maya_valid.validation</field>
+      <field name="view_mode">list,form</field>
+      <field name="context">{'search_default_group_by_study': 1, 'search_default_group_by_state': 1}</field>
+      <field name="domain">[('validation_type', '=', 0)]</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">Todavía no hay convalidaciones por estudios pendientes</p>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maya_valid.action_competency_validation">
+      <field name="name">Convalidaciones UC por experiencia</field>
+      <field name="res_model">maya_valid.validation</field>
+      <field name="view_mode">list,form</field>
+      <field name="context">{'search_default_group_by_study': 1, 'search_default_group_by_state': 1}</field>
+      <field name="domain">[('validation_type', '=', 1)]</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">Todavía no hay convalidaciones por competencias pendientes</p>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maya_valid.action_academic_records">
+      <field name="name">Expedientes a generar</field>
+      <field name="res_model">maya_valid.academic_record</field>
+      <field name="view_mode">list</field>
+      <field name="context">{'search_default_group_by_state': 1}</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">Todavía no hay expedientes pendientes</p>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maya_valid.action_validation_subject">
+      <field name="name">Módulos a convalidar por</field>
+      <field name="res_model">maya_valid.validation_subject</field>
+      <field name="view_mode">list</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maya_valid.action_config_settings">
+      <field name="name">Configuración</field>
+      <field name="res_model">res.config.settings</field>
+      <field name="view_mode">form</field>
+      <field name="target">current</field>
+      <field name="context">{'module': 'maya_valid'}</field>
+    </record>
+
+    <!-- Top menu item -->
+    <menuitem name="Maya | Convalidaciones" id="maya_valid.menu_root" sequence="3"/>
+
+    <!-- menu categories -->
+    <menuitem name="Convalidaciones" id="maya_valid.menu_validations_l0" parent="maya_valid.menu_root"/>
+    <menuitem name="Secretaria" id="maya_valid.menu_administration" parent="maya_valid.menu_root"/>
+    <menuitem name="Configuración" id="maya_valid.menu_configuration" parent="maya_valid.menu_root"/>
+    
+    <!-- menú convalidaciones -->
+    <menuitem name="Por estudios" id="maya_valid.menu_studies_validations" parent="maya_valid.menu_validations_l0"
+              action="maya_valid.action_studies_validation"/>
+    <menuitem name="Competencias" id="maya_valid.menu_competency_validations" parent="maya_valid.menu_validations_l0"
+              action="maya_valid.action_competency_validation"/>
+
+    <!-- menú scretaria -->
+    <menuitem name="Expedientes" id="maya_valid.menu_academic_records" parent="maya_valid.menu_administration"
+              action="maya_valid.action_academic_records"/>
+    
+    <!-- Menu Configuración -->
+    <menuitem name="General" id="maya_valid.menu_settings" parent="maya_valid.menu_configuration"
+              action="maya_valid.action_config_settings"/>
+
+  </data>
+</odoo>

@@ -1,0 +1,29 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="maya_valid.report_all_by_course_view_wizard">
+      <field name="name">Convalidaciones por Ciclo</field>
+      <field name="model">maya_valid.report_all_by_course_wizard</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="studies_ids" widget="many2many_tags" options="{'no_create': True}"/>
+            <field name="all_courses" widget="boolean_toggle" />
+          </group>
+          <footer>
+            <button string="Generar" default_focus="1" class="oe_highlight" name="generate_report" type="object"/>
+            <button string="Cancelar" class="btn btn-secondary" special="cancel" />
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maya_valid.action_generate_report_all_by_course">
+      <field name="name">Informe convalidaciones por ciclo</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">maya_valid.report_all_by_course_wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+  </data>
+</odoo>

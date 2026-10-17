@@ -1,0 +1,87 @@
+<odoo>
+  <data>
+    <!-- ************************************************************************* -->
+    <!-- permisos sobre el modelo que implementa la tarea de descargar convalidaciones 
+         (maya_valid.cron_job_download_validations) -->
+    <!-- ************************************************************************* -->
+
+    <!-- permisos administradores del sistema -->
+    <record id="maya_valid.cron_job_download_validations_maya_system_admin_access" model="ir.model.access">
+      <field name="name">Acceso de administradores del sistema a maya_valid.cron_job_download_validations</field>
+      <field name="model_id" ref="model_maya_valid_cron_job_download_validations"/>
+      <field name="group_id" ref="maya_core.group_ROOT"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- ************************************************************************* -->
+    <!-- permisos sobre el modelo que implementa la tarea de notificar a los alumnos 
+         información sobre convalidaciones
+         (maya_valid.cron_job_notify_validations) -->
+    <!-- ************************************************************************* -->
+
+    <!-- permisos administradores del sistema -->
+    <record id="maya_valid.cron_job_notify_validations_maya_system_admin_access" model="ir.model.access">
+      <field name="name">Acceso de administradores del sistema a maya_valid.cron_job_notify_validations</field>
+      <field name="model_id" ref="model_maya_valid_cron_job_notify_validations"/>
+      <field name="group_id" ref="maya_core.group_ROOT"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- ************************************************************************* -->
+    <!-- permisos sobre el modelo que implementa la tarea de notificar a los alumnos 
+         información sobre las reclamaciones de las convalidaciones
+         (maya_valid.cron_job_notify_validations_claims) -->
+    <!-- ************************************************************************* -->
+
+    <!-- permisos administradores del sistema -->
+    <record id="maya_valid.cron_job_notify_validations_claims_maya_system_admin_access" model="ir.model.access">
+      <field name="name">Acceso de administradores del sistema a maya_valid.cron_job_notify_validations_claims</field>
+      <field name="model_id" ref="model_maya_valid_cron_job_notify_validations_claims"/>
+      <field name="group_id" ref="maya_core.group_ROOT"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- ************************************************************************* -->
+    <!-- permisos sobre el modelo que implementa la tarea de repasar que convalidaciones
+         han finalizado
+         (maya_valid.cron_job_check_deadline_validations) -->
+    <!-- ************************************************************************* -->
+
+    <!-- permisos administradores del sistema -->
+    <record id="maya_valid.cron_job_check_deadline_validations_maya_system_admin_access" model="ir.model.access">
+      <field name="name">Acceso de administradores del sistema a maya_valid.cron_job_check_deadline_validations</field>
+      <field name="model_id" ref="model_maya_valid_cron_job_check_deadline_validations"/>
+      <field name="group_id" ref="maya_core.group_ROOT"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- ************************************************************************* -->
+    <!-- permisos sobre el modelo que implementa la tarea de descargar reclamaciones de 
+         convalidaciones 
+         (maya_valid.cron_job_download_validations_claims) -->
+    <!-- ************************************************************************* -->
+
+    <!-- permisos administradores del sistema -->
+    <record id="maya_valid.cron_job_download_validations_claims_maya_system_admin_access" model="ir.model.access">
+      <field name="name">Acceso de administradores del sistema a maya_valid.cron_job_download_validations_claims</field>
+      <field name="model_id" ref="model_maya_valid_cron_job_download_validations_claims"/>
+      <field name="group_id" ref="maya_core.group_ROOT"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+  </data>
+</odoo>

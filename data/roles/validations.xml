@@ -1,0 +1,91 @@
+<odoo>
+  <data>
+    <!-- Administración -->
+    <record model="maya_core.rol" id="maya_valid.rol_CONVAFI">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de AFI</field>
+      <field name="study_id" ref="maya_core.CF_AFI" />
+      <field name="team_id" ref="maya_core.dep_adge" />
+    </record>
+
+    <record model="maya_core.rol" id="maya_valid.rol_CONVADI">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de ADI</field>
+      <field name="study_id" ref="maya_core.CF_ADI" />
+      <field name="team_id" ref="maya_core.dep_adge" />
+    </record>
+
+    <!-- Informática -->
+    <record model="maya_core.rol" id="maya_valid.rol_CONVDAM">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de DAM</field>
+      <field name="study_id" ref="maya_core.CF_DAM" />
+      <field name="team_id" ref="maya_core.dep_infor" />
+    </record>
+
+    <record model="maya_core.rol" id="maya_valid.rol_CONVDAW">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de DAW</field>
+      <field name="study_id" ref="maya_core.CF_DAW" />
+      <field name="team_id" ref="maya_core.dep_infor" />
+    </record>
+
+    <record model="maya_core.rol" id="maya_valid.rol_CONVASIR">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de ASIR</field>
+      <field name="study_id" ref="maya_core.CF_ASIR" />
+      <field name="team_id" ref="maya_core.dep_infor" />
+    </record>
+
+    <!-- Comercio -->
+    <record model="maya_core.rol" id="maya_valid.rol_CONVCI">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de CI</field>
+      <field name="study_id" ref="maya_core.CF_CI" />
+      <field name="team_id" ref="maya_core.dep_coma" />
+    </record>
+
+    <record model="maya_core.rol" id="maya_valid.rol_CONVTIL">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de TIL</field>
+      <field name="study_id" ref="maya_core.CF_TIL" />
+      <field name="team_id" ref="maya_core.dep_coma" />
+    </record>
+
+    <record model="maya_core.rol" id="maya_valid.rol_CONVGVEC">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de GVEC</field>
+      <field name="study_id" ref="maya_core.CF_GVEC" />
+      <field name="team_id" ref="maya_core.dep_coma" />
+    </record>
+
+    <record model="maya_core.rol" id="maya_valid.rol_CONVMIP">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de MIP</field>
+      <field name="study_id" ref="maya_core.CF_MIP" />
+      <field name="team_id" ref="maya_core.dep_coma" />
+    </record>
+
+    <!-- Turismo -->
+    <record model="maya_core.rol" id="maya_valid.rol_CONVGAT">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de GAT</field>
+      <field name="study_id" ref="maya_core.CF_GAT" />
+      <field name="team_id" ref="maya_core.dep_hotu" />
+    </record>
+
+    <record model="maya_core.rol" id="maya_valid.rol_CONVGIAT">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de GIAT</field>
+      <field name="study_id" ref="maya_core.CF_GIAT" />
+      <field name="team_id" ref="maya_core.dep_hotu" />
+    </record>
+
+    <record model="maya_core.rol" id="maya_valid.rol_CONVAVGE">
+      <field name="rol">CONV</field>
+      <field name="description">Convalidador del ciclo de AVGE</field>
+      <field name="study_id" ref="maya_core.CF_AVGE" />
+      <field name="team_id" ref="maya_core.dep_hotu" />
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,81 @@
+<odoo>
+  <data>
+    <!-- Cron Jobs Templates -->
+    <record model="maya_core.cron_register" id="maya_valid.cron_download_validations">
+      <field name="name">Descarga convalidaciones</field>
+      <field name="key">DVAL</field>
+      <field name="context">FPC</field>
+      <field name="model">cron_job_download_validations</field>
+      <field name="code">cron_download_validations</field>
+      <field name="numbercall">1</field>
+      <field name="nextcall_day">school_year.date_init</field>
+      <field name="nextcall_hour">23:00:00</field>
+    </record>
+
+    <record model="maya_core.cron_register" id="maya_valid.cron_notify_validations">
+      <field name="name">Notificación convalidaciones</field>
+      <field name="key">NOTV</field>
+      <field name="context">FPC</field>
+      <field name="model">cron_job_notify_validations</field>
+      <field name="code">cron_notify_validations</field>
+      <field name="numbercall">1</field>
+      <field name="nextcall_day">school_year.date_init</field>
+      <field name="nextcall_hour">02:00:00</field>
+    </record>
+
+    <record model="maya_core.cron_register" id="maya_valid.cron_notify_validations_claims">
+      <field name="name">Notificación reclamación convalidaciones</field>
+      <field name="key">NTCV</field>
+      <field name="context">FPC</field>
+      <field name="model">cron_job_notify_validations_claims</field>
+      <field name="code">cron_notify_validations_claims</field>
+      <field name="numbercall">1</field>
+      <field name="nextcall_day">school_year.date_init</field>
+      <field name="nextcall_hour">02:00:00</field>
+    </record>
+
+    <record model="maya_core.cron_register" id="maya_valid.cron_check_deadline_validations">
+      <field name="name">Comprobación de fechas límites convalidaciones superadas</field>
+      <field name="key">CHDL</field>
+      <field name="context">FPC</field>
+      <field name="model">cron_job_check_deadline_validations</field>
+      <field name="code">cron_check_deadline_validations</field>
+      <field name="numbercall">1</field>
+      <field name="nextcall_day">school_year.date_init</field>
+      <field name="nextcall_hour">22:45:00</field>
+    </record>
+
+    <record model="maya_core.cron_register" id="maya_valid.cron_download_validations_claims">
+      <field name="name">Descarga reclamaciones convalidaciones</field>
+      <field name="key">DVAC</field>
+      <field name="context">FPC</field>
+      <field name="model">cron_job_download_validations_claims</field>
+      <field name="code">cron_download_validations_claims</field>
+      <field name="numbercall">1</field>
+      <field name="nextcall_day">school_year.date_init</field>
+      <field name="nextcall_hour">00:15:00</field>
+    </record>
+
+    <record model="maya_core.cron_register" id="maya_valid.cron_download_validations_competence">
+      <field name="name">Descarga convalidaciones por competencias</field>
+      <field name="key">DVUC</field>
+      <field name="context">FPC</field>
+      <field name="model">cron_job_download_validations</field>
+      <field name="code">cron_download_validations</field>
+      <field name="numbercall">1</field>
+      <field name="nextcall_day">school_year.date_init</field>
+      <field name="nextcall_hour">02:10:00</field>
+    </record>
+
+    <record model="maya_core.cron_register" id="maya_valid.cron_notify_competency_validations">
+      <field name="name">Notificación convalidaciones por competencias</field>
+      <field name="key">NVUC</field>
+      <field name="context">FPC</field>
+      <field name="model">cron_job_notify_validations</field>
+      <field name="code">cron_notify_validations</field>
+      <field name="numbercall">1</field>
+      <field name="nextcall_day">school_year.date_init</field>
+      <field name="nextcall_hour">02:20:00</field>
+    </record>
+  </data>
+</odoo>

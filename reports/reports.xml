@@ -1,0 +1,23 @@
+<odoo>
+  <data>
+    <!-- Informes -->
+    <record model="maya_report.report" id="maya_valid.valid_all_by_course">
+      <field name="code">MCORER001</field>
+      <field name="name">Convalidaciones por ciclo</field>
+      <field name="description">Genera un informe de todas las convalidaciones cerradas por Ciclo Formativo</field>
+      <field name="version">0.2b</field>
+      <field name="module">maya_valid</field>
+      <field name="action">maya_valid.action_generate_report_all_by_course</field>
+    </record>
+
+    <record model="maya_report.report" id="maya_valid.valid_denied_by_student_course">
+      <field name="code">MCORER002</field>
+      <field name="name">Convalidaciones denegadas ciclo/estudiante</field>
+      <field name="description">Genera un informe de las convalidaciones denegadas agrupadas por Ciclo Formativo y estudiante</field>
+      <field name="version">0.1a</field>
+      <field name="module">maya_valid</field>
+      <field name="action">maya_valid.action_generate_report_all_by_course</field>
+    </record>
+  
+  </data>
+</odoo>

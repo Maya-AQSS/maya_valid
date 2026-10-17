@@ -1,0 +1,53 @@
+<odoo>
+  <record id="maya_valid.validations_pdf_report" model="ir.actions.report">
+    <field name="name">Convalidaciones</field>
+    <field name="model">maya_valid.validation</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_file">maya_valid.report_validations</field>
+    <field name="report_name">maya_valid.report_validations</field>
+    <field name="print_report_name">'Convalidaciones - %s' % (object.school_year_id.name)</field>
+  </record>
+
+  <template id="maya_valid.report_validations">
+    <t t-call="web.html_container">
+      <!-- por si se mandará a imprimir calendarios de varios cursos escolares -->
+     
+      <t t-call="web.external_layout"> <!-- añade el header y el footer -->
+        <!-- wktmltopdf no lee los ficheros CSS externos, asi que hay que embeber el código
+              en la etiqueta style. Para poder disponer del código en un fichero externo
+              buscamos la etiqueta style e  insertamos el enlace al ficher .css  -->
+        <xpath expr="//style" position="after">
+          <link rel="stylesheet" href="/maya_core/static/css/school_calendar_report.css"/>
+        </xpath>
+        <style/>
+        <!--  <t t-esc="report_data.get('course')"/>-->
+        <h3>Convalidaciones <t t-esc="course"/></h3>
+        
+        <t t-foreach="docs" t-as="record">
+          <div class="page">
+            <p><span><t t-esc="record.student_info"/></span></p>
+
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr><th style="text-align: center;">Código</th><th style="text-align: center">Módulo</th><th style="text-align: center">Tipo</th><th style="text-align: center">Aceptada</th><th style="text-align: center">Calificación</th></tr></thead>
+                <tbody>
+                  <t t-foreach="record.validation_subjects_ids" t-as="val">
+                    <tr>
+                      <td><t t-esc="val.subject_id.code"/></td>
+                      <td style="padding-left:1rem"><t t-esc="val.subject_id.name"/></td>
+                      <td style="padding-left:1rem"><t t-esc="dict(val._fields['validation_type'].selection).get(val.validation_type)"/></td>
+                      <td style="text-align: center"><t t-esc="dict(val._fields['accepted'].selection).get(val.accepted)"/></td>
+                      <t t-if="val.accepted == '1'">
+                        <td style="text-align: center"><t t-esc="dict(val._fields['mark'].selection).get(val.mark)"/></td>
+                      </t>
+                      <t t-else=""><td></td></t>
+                    </tr>
+                  </t>
+                </tbody>
+             </table>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

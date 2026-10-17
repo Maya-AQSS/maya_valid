@@ -1,0 +1,10 @@
+<odoo>
+  <!-- noupdate: el valor solo se fija al instalar. Actualizar el módulo no
+       sobrescribe la ruta configurada en Ajustes -->
+  <data noupdate="1">
+    <record id="maya_valid.param_validations_path" model="ir.config_parameter">
+      <field name="key">maya_valid.validations_path</field>
+      <field name="value">/mnt/odoo-repo/convalidaciones</field>
+    </record>
+  </data>
+</odoo>

@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+/static/mbz/*_mbz
+/static/mbz/*.mbz

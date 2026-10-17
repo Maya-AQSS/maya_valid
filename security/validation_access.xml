@@ -1,0 +1,203 @@
+<odoo>
+  <data>
+    <!-- ******************************************************** -->
+    <!-- permisos sobre el modelo de convalidaciones (validation) -->
+    <!-- ******************************************************** -->
+
+    <!-- permisos usuarios generales -->
+    <record id="maya_valid.validation_general_user_access" model="ir.model.access">
+      <field name="name">Acceso usuario general a validation</field>
+      <field name="model_id" ref="model_maya_valid_validation"/>
+      <field name="group_id" ref="base.group_user"></field>
+      <!-- Si se da acceso o no de ese tipo de operación. 
+           Por defecto es no. Si no estuviera definido el permiso no se tendría acceso -->
+      <field name="perm_read">0</field>
+      <field name="perm_create">0</field>
+      <field name="perm_write">0</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- permisos convalidadores -->
+    <record id="maya_valid.validation_validator_rol_access" model="ir.model.access">
+      <field name="name">Acceso de convalidadores a validation</field>
+      <field name="model_id" ref="model_maya_valid_validation"/>
+      <field name="group_id" ref="maya_valid.group_VALID"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">0</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- permisos revisores -->
+    <record id="maya_valid.validation_reviewer_rol_access" model="ir.model.access">
+      <field name="name">Acceso de revisores a validation</field>
+      <field name="model_id" ref="model_maya_valid_validation"/>
+      <field name="group_id" ref="maya_core.group_MNGT_FP"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">0</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- permisos Secretaria -->
+    <record id="maya_valid.validation_admin_access" model="ir.model.access">
+      <field name="name">Acceso de Secretaria a validation</field>
+      <field name="model_id" ref="model_maya_valid_validation"/>
+      <field name="group_id" ref="maya_core.group_ADMIN"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">0</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- permisos dirección -->
+    <record id="maya_valid.validation_mngt_rol_access" model="ir.model.access">
+      <field name="name">Acceso de equipo directivo a validation</field>
+      <field name="model_id" ref="model_maya_valid_validation"/>
+      <field name="group_id" ref="maya_core.group_MNGT"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- permisos administradores del sistema -->
+    <record id="maya_valid.maya_system_admin_access" model="ir.model.access">
+      <field name="name">Acceso de administradores del sistema a validation</field>
+      <field name="model_id" ref="model_maya_valid_validation"/>
+      <field name="group_id" ref="maya_core.group_ROOT"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">1</field>
+    </record>
+
+    <!-- ************************************************************************* -->
+    <!-- permisos sobre el modelo de convalidaciones de modulos (validation_subject) -->
+    <!-- ************************************************************************* -->
+
+    <!-- permisos usuarios generales -->
+    <record id="maya_valid.validation_subject_general_user_access" model="ir.model.access">
+      <field name="name">Acceso usuario general a validation_subject</field>
+      <field name="model_id" ref="model_maya_valid_validation_subject"/>
+      <field name="group_id" ref="base.group_user"/>
+      <field name="perm_read">0</field>
+      <field name="perm_create">0</field>
+      <field name="perm_write">0</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- permisos convalidadores -->
+    <record id="maya_valid.validation_subject_validator_rol_access" model="ir.model.access">
+      <field name="name">Acceso de convalidadores a validation_subject</field>
+      <field name="model_id" ref="model_maya_valid_validation_subject"/>
+      <field name="group_id" ref="maya_valid.group_VALID"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">0</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- permisos Secretaria -->
+    <record id="maya_valid.validation_subject_admin_access" model="ir.model.access">
+      <field name="name">Acceso de Secretaria a validation_subject</field>
+      <field name="model_id" ref="model_maya_valid_validation_subject"/>
+      <field name="group_id" ref="maya_core.group_ADMIN"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">0</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- permisos revisores -->
+    <record id="maya_valid.validation_subject_reviewer_rol_access" model="ir.model.access">
+      <field name="name">Acceso de revisores a validation_subject</field>
+      <field name="model_id" ref="model_maya_valid_validation_subject"/>
+      <field name="group_id" ref="maya_core.group_MNGT_FP"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">0</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+
+    <!-- permisos dirección -->
+    <record id="maya_valid.validation_subject_mngt_rol_access" model="ir.model.access">
+      <field name="name">Acceso de equipo directivo a validation_subject</field>
+      <field name="model_id" ref="model_maya_valid_validation_subject"/>
+      <field name="group_id" ref="maya_core.group_MNGT"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- permisos administradores del sistema -->
+    <record id="maya_valid.validation_subject_maya_system_admin_access" model="ir.model.access">
+      <field name="name">Acceso de administradores del sistema a validation_subject</field>
+      <field name="model_id" ref="model_maya_valid_validation_subject"/>
+      <field name="group_id" ref="maya_core.group_ROOT"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">1</field>
+    </record>
+
+    <!-- ******************************************************** -->
+    <!-- permisos sobre el modelo de expedientes (academic_record) -->
+    <!-- ******************************************************** -->
+
+    <!-- permisos administradores del sistema -->
+    <record id="maya_valid.academic_record_maya_system_admin_access" model="ir.model.access">
+      <field name="name">Acceso de administradores del sistema a los expedientes pendientes</field>
+      <field name="model_id" ref="model_maya_valid_academic_record"/>
+      <field name="group_id" ref="maya_core.group_ROOT"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">1</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+    <!-- permisos Secretaria -->
+    <record id="maya_valid.academic_record_admin_access" model="ir.model.access">
+      <field name="name">Acceso de Secretaria a los expedientes pendientest</field>
+      <field name="model_id" ref="model_maya_valid_academic_record"/>
+      <field name="group_id" ref="maya_core.group_ADMIN"/>
+      <field name="perm_read">1</field>
+      <field name="perm_create">0</field>
+      <field name="perm_write">1</field>
+      <field name="perm_unlink">0</field>
+    </record>
+
+
+    <!-- ************************************************************************* -->
+    <!-- Reglas de registro. Condiciones que se deben dar para que algo ocurra. 
+         Se ejecutan registro por registro                                         -->
+    <!-- ************************************************************************* -->
+
+    <!-- Regla para ver solo las convalidaciones resueltas o en instancia superior o en subsanación-->
+    <record id="maya_valid.validation_coordfp_rol_rule" model="ir.rule">
+      <field name="name">Acceso de los revisores sólo a las convalidaciones en estado de revisión</field>
+      <field name="model_id" ref="model_maya_valid_validation"/>
+      <field name="groups" eval="[(4, ref('maya_core.group_MNGT_FP'))]"/>
+      <field name="domain_force">['|', ('validation_type','=',1) ,('state','in',['2','3','4','5','6','7','8','9','10','11','12','13','15','16','17'])]</field>
+    </record>
+
+    <!-- Regla para ver solo las convalidaciones que le corresponden al convalidador -->
+    <record id="maya_valid.validation_validator_rol_rule" model="ir.rule">
+      <field name="name">Acceso de los validadores solo a las convalidaciones de sus ciclos</field>
+      <field name="model_id" ref="model_maya_valid_validation"/>
+      <field name="groups" eval="[(4, ref('maya_valid.group_VALID'))]"/>
+      <field name="domain_force">[('study_id','in',[rol.study_id.id for rol in user.maya_employee_id.roles_ids if rol.rol == 'CONV' and rol.study_id])]</field>
+    </record>
+
+    <!-- Regla para ver solo las convalidaciones revisadas, finalizadas, cerradas o revisasdas tras convalidación -->
+    <record id="maya_valid.validation_administration_rol_rule" model="ir.rule">
+      <field name="name">Acceso de secretaria sólo a las convalidaciones en estado de revisión</field>
+      <field name="model_id" ref="model_maya_valid_validation"/>
+      <field name="groups" eval="[(4, ref('maya_core.group_ADMIN'))]"/>
+      <field name="domain_force">[('state','in',['8','9','10','11','12','13','15','17'])]</field>
+    </record>
+
+  </data>
+</odoo>

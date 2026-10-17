@@ -1,0 +1,9 @@
+<odoo>
+  <data>
+    <record id="maya_valid.group_VALID" model="res.groups">
+      <field name="name">Convalidadores</field>
+      <field name="privilege_id" ref="maya_core.privilege_maya"/>
+      <field name="implied_ids" eval="[(4,ref('maya_core.group_TEACH'))]"/>
+    </record>
+  </data>
+</odoo>
