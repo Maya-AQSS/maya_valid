@@ -79,7 +79,7 @@ class ValidationsApiController(ApiBaseController):
       return error_response('study debe ser la abreviatura de un estudio.', 'INVALID_PARAM', 400)
 
     try:
-      result = request.env['maya_valid.submission'].with_user(app_user).sudo().sync_from_moodle(
+      result = request.env['maya_moodle.submission'].with_user(app_user).sudo().sync_validations(
           VALIDATION_TYPES[validation_type], kind=kind, study_abbr=study)
     except UserError as e:
       # configuración incompleta (gateway, usuario de servicio...)
