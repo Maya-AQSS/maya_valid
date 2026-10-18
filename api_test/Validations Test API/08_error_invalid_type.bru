@@ -1,0 +1,36 @@
+meta {
+  name: Error - Invalid Validation Type
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{odooURLInternal}}/api/v1/validations/otro/sync
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{apiKey}}
+}
+
+body:json {
+  {}
+}
+
+assert {
+  res.status: eq 404
+  res.body.success: eq false
+  res.body.code: eq INVALID_TYPE
+}
+
+tests {
+  test("Debe devolver 404 si el tipo no es studies ni competency", function() {
+    expect(res.getStatus()).to.equal(404);
+    expect(res.getBody().code).to.equal("INVALID_TYPE");
+  });
+}

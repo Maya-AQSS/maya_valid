@@ -1,0 +1,36 @@
+meta {
+  name: Error - Invalid Token
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{odooURLInternal}}/api/v1/validations/studies/sync
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: token_invalido_12345
+}
+
+body:json {
+  {}
+}
+
+assert {
+  res.status: eq 401
+  res.body.success: eq false
+  res.body.code: eq INVALID_API_KEY
+}
+
+tests {
+  test("Debe rechazar la petición si el API Key es inválido", function() {
+    expect(res.getStatus()).to.equal(401);
+    expect(res.getBody().code).to.equal("INVALID_API_KEY");
+  });
+}

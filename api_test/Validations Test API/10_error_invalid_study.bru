@@ -1,0 +1,38 @@
+meta {
+  name: Error - Invalid Study
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{odooURLInternal}}/api/v1/validations/studies/sync
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{apiKey}}
+}
+
+body:json {
+  {
+    "study": 7
+  }
+}
+
+assert {
+  res.status: eq 400
+  res.body.success: eq false
+  res.body.code: eq INVALID_PARAM
+}
+
+tests {
+  test("Debe devolver 400 si study no es una abreviatura (texto)", function() {
+    expect(res.getStatus()).to.equal(400);
+    expect(res.getBody().code).to.equal("INVALID_PARAM");
+  });
+}

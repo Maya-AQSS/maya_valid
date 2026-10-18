@@ -1,0 +1,14 @@
+{
+  "version": "1",
+  "name": "Validations Test API",
+  "type": "collection",
+  "scripts": {
+    "filesystemAccess": {
+      "allow": true
+    }
+  },
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

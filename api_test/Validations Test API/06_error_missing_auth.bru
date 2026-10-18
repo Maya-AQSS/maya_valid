@@ -1,0 +1,32 @@
+meta {
+  name: Error - Missing Authentication
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{odooURLInternal}}/api/v1/validations/studies/sync
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {}
+}
+
+assert {
+  res.status: eq 401
+  res.body.success: eq false
+  res.body.code: eq MISSING_AUTH
+}
+
+tests {
+  test("Debe rechazar la petición sin autenticación", function() {
+    expect(res.getStatus()).to.equal(401);
+    expect(res.getBody().code).to.equal("MISSING_AUTH");
+  });
+}

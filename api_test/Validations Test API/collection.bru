@@ -1,0 +1,37 @@
+meta {
+  name: Validations Test API
+}
+
+docs {
+  Simula a n8n lanzando la sincronización de las entregas de convalidaciones de Moodle:
+  POST /api/v1/validations/{studies|competency}/sync
+
+  - apiKey: API key de un usuario de Odoo con el grupo «Integración n8n»
+    (maya_core.group_n8n_integration). Se lee de .server-info/odoo/secrets/.api_key_n8n
+    (se regenera al levantar el sistema). Si se rellena a mano en el entorno, manda la
+    del entorno. Es secreta: no se guarda en el fichero del entorno.
+    Leer el fichero necesita el sandbox de desarrollador: en la app, «Developer Mode» al abrir
+    la colección; en la CLI, --sandbox developer:
+      bru run --env docker --sandbox developer
+    En modo seguro no se puede leer: hay que poner apiKey a mano (o --env-var apiKey=...).
+  - Las peticiones 01-05 necesitan el gateway de Moodle configurado (URL en Ajustes, variable
+    MAYA_GATEWAY_API_KEY en Odoo y usuario de servicio). Si no lo está, responden 503
+    CONFIGURATION_ERROR.
+  - Las peticiones 06-13 son de error y no llegan a Moodle.
+}
+
+script:pre-request {
+  // Si no se ha puesto a mano, la API key de n8n se lee del fichero que se genera al
+  // levantar el sistema: <maya-aqss>/.server-info/odoo/secrets/.api_key_n8n
+  // (primera línea: la key; segunda: su fecha de caducidad)
+  if (!bru.getEnvVar("apiKey")) {
+    const fs = require("fs");
+    const path = require("path");
+    const keyFile = path.join(bru.cwd(), "..", "..", "..", "..", ".server-info", "odoo", "secrets", ".api_key_n8n");
+    if (fs.existsSync(keyFile)) {
+      bru.setEnvVar("apiKey", fs.readFileSync(keyFile, "utf8").split(/\r?\n/)[0].trim());
+    } else {
+      console.warn("No se encuentra " + keyFile + ": pon la API key a mano en el entorno (apiKey)");
+    }
+  }
+}

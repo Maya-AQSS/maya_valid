@@ -1,0 +1,57 @@
+meta {
+  name: Sync Studies Requests of One Study - Success
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{odooURLInternal}}/api/v1/validations/studies/sync
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{apiKey}}
+}
+
+body:json {
+  {
+    "kind": "request",
+    "study": "{{study}}"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.success: eq true
+  res.body.type: eq studies
+  res.body.kind: eq request
+}
+
+tests {
+  test("Sincroniza solo las tareas del estudio indicado", function() {
+    const body = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+    expect(body.tasks).to.be.an("array");
+    expect(body.totals).to.be.an("object");
+  });
+
+  test("Todas las tareas son del estudio pedido", function() {
+    for (const task of res.getBody().tasks) {
+      expect(task.study).to.equal(bru.getEnvVar("study"));
+    }
+  });
+
+  test("Cada tarea trae sus recuentos o un error", function() {
+    for (const task of res.getBody().tasks) {
+      expect(task).to.have.property("task_id");
+      if (!task.error) {
+        expect(task).to.have.property("received");
+      }
+    }
+  });
+}

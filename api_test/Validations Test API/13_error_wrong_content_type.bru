@@ -1,0 +1,36 @@
+meta {
+  name: Error - Wrong Content-Type
+  type: http
+  seq: 13
+}
+
+post {
+  url: {{odooURLInternal}}/api/v1/validations/studies/sync
+  body: text
+  auth: bearer
+}
+
+headers {
+  Content-Type: text/plain
+}
+
+auth:bearer {
+  token: {{apiKey}}
+}
+
+body:text {
+  kind=claim
+}
+
+assert {
+  res.status: eq 415
+  res.body.success: eq false
+  res.body.code: eq UNSUPPORTED_MEDIA_TYPE
+}
+
+tests {
+  test("Debe devolver 415 si el cuerpo no se envía como application/json (si no, se ignoraría y se sincronizarían solicitudes)", function() {
+    expect(res.getStatus()).to.equal(415);
+    expect(res.getBody().code).to.equal("UNSUPPORTED_MEDIA_TYPE");
+  });
+}
