@@ -22,6 +22,12 @@
         <field name="school_year_id" position="after">
           <field name="kind" invisible="not kind"/>
         </field>
+        <group name="submission" position="after">
+          <group string="Ficheros descargados" invisible="not kind">
+            <field name="zip_path"/>
+            <field name="folder_path"/>
+          </group>
+        </group>
       </field>
     </record>
 

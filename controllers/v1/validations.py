@@ -52,7 +52,7 @@ class ValidationsApiController(ApiBaseController):
   def sync_submissions(self, validation_type, **kwargs):
     app_user, err = self._authenticate(
         require_human_user=False,
-        required_group='maya_valid.group_valid_integration',
+        required_group='maya_core.group_n8n_integration',
     )
     if err:
       return err

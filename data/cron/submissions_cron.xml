@@ -1,0 +1,17 @@
+<odoo>
+  <!-- noupdate: se puede cambiar la frecuencia en producción sin que una actualización la machaque -->
+  <data noupdate="1">
+    <!-- Procesa las entregas de convalidaciones pendientes (descarga y descompresión).
+         La sincronización lo lanza al momento con _trigger(); la ejecución periódica es de
+         respaldo y reintenta lo que se quedó pendiente por un fallo del gateway. -->
+    <record id="maya_valid.cron_process_submissions" model="ir.cron">
+      <field name="name">Convalidaciones: procesar entregas de Moodle</field>
+      <field name="model_id" ref="maya_moodle.model_maya_moodle_submission"/>
+      <field name="state">code</field>
+      <field name="code">model._cron_process_validations()</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">hours</field>
+      <field name="active" eval="True"/>
+    </record>
+  </data>
+</odoo>

@@ -43,6 +43,7 @@
         'views/config_settings_view.xml',
         # datos de modelos
         'data/config/config_data.xml',
+        'data/cron/submissions_cron.xml',
         'data/roles/validations.xml',
     ],
     'assets': {
