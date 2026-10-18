@@ -3,12 +3,8 @@
     <record id="maya_valid.group_VALID" model="res.groups">
       <field name="name">Convalidadores</field>
       <field name="privilege_id" ref="maya_core.privilege_maya"/>
+       <!--  los convalidadores tiene automáticamente todo lo de los profesores -->
       <field name="implied_ids" eval="[(4,ref('maya_core.group_TEACH'))]"/>
-    </record>
-
-    <!-- aplicaciones externas (n8n) que pueden lanzar la sincronización de convalidaciones vía API -->
-    <record id="maya_valid.group_valid_integration" model="res.groups">
-      <field name="name">Integración convalidaciones</field>
     </record>
   </data>
 </odoo>
